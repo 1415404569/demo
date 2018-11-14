@@ -1,0 +1,35 @@
+th{
+    text-align: center;
+    /*border: 20px red;*/
+}
+.jumbotron{
+    /*height: 300px;*/
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    width: 800px;
+}
+.input-group{
+    margin: auto;
+    width: 700px;
+}
+.h1-text-align{
+    text-align: center;
+}
+.search-result{
+    margin: auto;
+}
+
+.search-file-info{
+    /*margin: auto;*/
+    text-align: left;
+    /*width: 700px;*/
+    font-weight:bold;
+}
+.search-table-info-td{
+    width:200px;
+}
+.search-table-info-td img{
+    width: 100px;
+    padding-left: 20px;
+}

@@ -1,0 +1,28 @@
+{% extends 'common/base.html' %}
+{% load static from staticfiles %}
+{% block linkscript %}
+<link rel="stylesheet" type="text/css" href="{% static 'vt_api/css/vt_api.css' %}"/>
+<!--<script type="text/javascript" charset="utf-8" src="{% static 'home/js/home.js' %}"></script>-->
+{% endblock linkscript %}
+{% block title %}第三方平台VT API{% endblock %}
+{% block base %}
+<div class="jumbotron">
+    <h1>提交信息转向VT查询</h1>
+    <form action="/vt_api/" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="请输入Hash、ip、url、域名进行搜索分析" name="search">
+        <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </span>
+    </div><!-- /input-group -->
+    </form>
+    <!--<p>返回的信息{{ vt_url }}</p>-->
+    <p>请注意：每分钟限制查询4次</p>
+</div>
+
+<div class="h1-text-align">
+    <h1>情报社区</h1>
+</div>
+{% endblock base %}

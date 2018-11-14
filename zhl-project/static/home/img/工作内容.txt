@@ -1,0 +1,25 @@
+http://docs.splunk.com/Documentation/Splunk/6.0.4/SearchTutorial/Useasubsearch    Splunk教程网址
+https://docs.splunk.com/Documentation/Splunk/6.4.3/SearchReference/Stats
+
+
+
+https://vps.nanpbs.top/bwg/buy.html?f=bad 买服务器
+
+
+编写一些简单的脚本
+
+1.写一个校验IP的应用，输入IP反馈IP地理位置
+2.写个登录QQ空间的脚本，可以指定访问目标用户空间的那种
+3.学一学 调用微信接口发消息
+4.平台网页
+5.python爬虫学习
+
+
+
+1、天融信大学帐号 sun_kaisheng 初始密码：topsec
+ 
+1、mail和VPN帐号 邮箱/VPN:sun_kaisheng，密码:Cg7yv3!Mpr，邮箱证书于本周五入职后发放
+ 
+3、CRM帐号 孙凯盛8272密码talent
+
+

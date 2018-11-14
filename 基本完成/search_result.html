@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>查询结果</title>
+    <link rel="stylesheet" href='main/css/bootstrap.min.css'>
+    <script src='main/js/jquery-3.1.1.min.js'></script>
+    <script src='main/js/bootstrap.min.js'></script>
+    <script type="text/javascript" src="main/js/vue.min.js"></script>
+    <script type="text/javascript" src="main/js/send.js"></script>
+    <link rel="stylesheet" href="main/css/search.css">
+    <script src="main/js/jquery.percentageloader-0.1.js"></script>
+   
+</head>
+<body style="background-image:url('main/icon/bg2.jpg');"><!--  -->
+    <div id="headd" class="noshow" style="background:#353434;">
+        <div style="width:30%;height:60px;border-bottom:1px solid #ccc;float:left;">
+            <ul>
+                <li class="head_lis2 "><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="#" >首页</a></li>
+                <li class="head_lis2"><a href="#" >API</a></li>
+                <li class="head_lis2"><a href="#" >监控</a></li>
+            </ul>
+        </div>
+        <div style="width:50%;height:60px;border-bottom:1px solid #ccc;float:left;"><br />
+            <div class="input-group" style="width:70%;">
+                <input type="text" id="text2" class="form-control" placeholder="IP、域名、文件HASH(MD5/SHA1/SHA256)、URL、邮箱">
+                <input type="hidden" id="api_num" value="adfs121d61f56s1df65as1f1dsa1adf3s213f21sda1f">
+                <span id="btn2" class="btn input-group-addon" onclick="send()">搜索</span>
+            </div>
+            
+        </div>
+        <div  style="width:20%;height:60px;border-bottom:1px solid #ccc;float:right;" ><br />
+            <button onclick="login(0)" type="button" class="btn btn-default btn-sm">登陆</button>&nbsp;
+            <button onclick="login(1)" type="button" class="btn btn-primary btn-sm">注册</button>
+        </div>
+    </div>
+    <div class="container-fluid" style="min-width:800px;">
+        <div class="row"  style="background:#353434;">
+            <div class="col-xs-6 " style="height:60px;border-bottom:1px solid #ccc">
+                <ul>
+                    <li class="head_lis"><span class="glyphicon glyphicon-home" style="color:white;" aria-hidden="true"></span> &nbsp; <a href="#" >首页</a></li>
+                    <li class="head_lis"><a href="#" >API</a></li>
+                    <li class="head_lis"><a href="#" >监控</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-3 col-sm-4" style="height:60px;border-bottom:1px solid #ccc"></div>
+            <div class="col-xs-3 col-sm-2" style="height:60px;border-bottom:1px solid #ccc" ><br />
+                <button type="button" onclick="login(0)" class="btn btn-default btn-sm">登陆</button>&nbsp;
+                <button type="button" onclick="login(1)" class="btn btn-primary btn-sm">注册</button>
+            </div>
+        </div>
+
+        <!-- 搜索部分**************************************************************** -->
+
+        <div  class="row"><br />
+           <div class="col-xs-6 col-xs-offset-3">
+               <div style="margin:0 auto;text-align:center;max-width:800px;">
+                 
+                    <div >
+                        <div style="max-width:1000px;margin:0 auto;<!-- border:1px solid blue -->">
+                             <div id="box" >
+                                 <button v-for="tab in tabs" :key="tab" :class='["tab-button",{active:currentTab === tab}]' @click = "currentTab = tab">[[ tab ]]</button>
+                                 <div style="clear:both"></div>
+                                  <keep-alive>
+                                    <component v-bind:is="currentTabComponent" class="tab"></component>
+                                  </keep-alive>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+           </div>
+       </div>
+        <template id="url">
+            <div style="">
+                <input style="width:80%;height:45px;" type="text" placeholder=" 输入一个可疑的URL开始分析"/>
+                <button type="button" class="btn btn-default btn-lg" style="background:#4d93f2">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true" style="color:white"></span>
+                </button>
+            </div>
+        </template>
+        <template id="url2">
+            <div style="">
+                <input style="width:80%;height:45px" id="text" type="text" placeholder=" IP、域名、文件HASH(MD5/SH1/SHA256)、邮箱"/>
+                <input type="hidden" id="api_num" value="adfs121d61f56s1df65as1f1dsa1adf3s213f21sda1f">
+                <button type="button" class="btn btn-default btn-lg" style="background:#4d93f2" onclick="send()">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true" style="color:white"></span>
+                </button>
+            </div>
+        </template>
+        <template id="file">
+            <div style="">
+                <form action="http://127.0.0.1:8000/add/" id="form_uplad" method="post" enctype="multipart/form-data">
+                    <input type="file" id="upload_file" style="display:none;" onchange="document.getElementById('sub').click()"/>
+                    <button type="button" id="btn" class="btn  btn-sm " onclick="document.getElementById('upload_file').click();">
+                      <span class="glyphicon glyphicon-plus btn-lg" aria-hidden="true"></span>
+                    </button><br /><br />
+                   <!--  <span style="font-weight:bold;font-family:'幼圆'">上传检测文件</span><br />
+                    <span style="font-family:'幼圆'">尝试点击此处，上传文件大小不超过 20M</span> -->
+                    <input type="submit" style="display: none;" id="sub">
+                </form>
+            </div>
+        </template>
+
+
+
+
+        <div class="row" style="min-width:800px;"><br /><br />
+            
+            <div id="app" class="col-sm-10 col-sm-offset-1 col-xs-12" style="border:1px solid #dcdcdc;border-radius:20px;background:white;box-shadow:2px 3px 20px #ccc;position:relative;">
+                <!-- <div style="width:100px;height:60px;border-left:5px solid #1e90ff;border-top:5px solid #1e90ff;position:absolute;left:-2px;"></div> -->
+               <br />
+                <!-- <span style="color:#2d4256;font-size:18px;font-weight:bold;color:#353434;">&nbsp;&nbsp;基本信息</span>
+                <hr style="background-color:#353434;height:2px" /> -->
+                <div style="width:77%;margin-left:3%;float:left;">  
+                    <span style="font-weight:bold;font-size:15px;">MD5：<span style="color:#1e90ff;font-weight:bold;font-size:20px;">{{contact.contact}}</span></span><br /><br />
+                    <span style="font-size:15px;font-weight:bold">地理位置：<span style="color:#1e90ff;">美国 美国</span> </span><br /><br />
+                    <span style="font-size:15px;font-weight:bold">标签：<span style="color:#1e90ff;">IDC服务器 白名单</span></span><br /><br />
+                    <span style="font-size:15px;font-weight:bold">用户标签：</span>
+                    <ul class="IP_ul">
+                        <li class="IP_lis">正常网站(5) </li>
+                        <li class="IP_lis">远程服务器(3) </li>
+                        <li class="IP_lis">失陷主机(2) </li>
+                    </ul>
+                </div>
+                <div style="width:20%;float:left;"><br />
+                    <!-- <img src="main/icon/bq.png" height="50%" width="70%" alt="" style="float:left;" /> -->
+                    <!-- <span style="float:right;width:100px;">正常</span> -->
+                    <div id="topLoader"></div>
+
+                </div>
+            </div>
+        </div><br />
+
+        <div class="row">
+
+            <div id="intelligence" class="col-sm-10 col-sm-offset-1 col-xs-12" style="border:1px solid #ccc;border-radius:20px;background:white;box-shadow:1px 2px 5px #ccc;" > <br /> 
+             <span style="color:#2d4256;font-size:18px;font-weight:bold;color:#353434;">&nbsp;&nbsp;查询结果</span>
+             <hr style="background-color:#353434;height:2px" />
+                <table class="table table-hover table-striped" style="width:100%">
+                    <thead>
+                        <tr style="background:#353434;color:white;font-weight:bold;">
+                            <td>情报源</td><td>时间</td><td>情报内容</td><td>状态</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr v-for="key in contact.list" v-bind:key="key">
+                            <td>{{key[0]}}</td>
+                            <td>{{key[2]}}</td>
+                            <td>{{key[1]}}</td>
+                            <td>2222222</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            <span style="color:#2d4256;font-size:18px;font-weight:bold;color:#353434;">&nbsp;&nbsp;关联URL</span>
+             <hr style="background-color:#353434;height:2px" />
+                <table class="table table-hover table-striped" style="width:100%">
+                    <thead>
+                        <tr style="background:#353434;color:white;font-weight:bold;">
+                            <td>URL</td><td>扫描时间</td><td>状态</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr v-for="key in contact.list" v-bind:key="key">
+                            <td>{{key[0]}}</td>
+                            <td>{{key[2]}}</td>
+                            <td>{{key[1]}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+                <div style="width:800px;height:100px"></div>
+            </div>
+
+        </div>
+        <div class="row"><br /><br />
+            <div class="col-xs-12" style="height:6%;background:#273851;position:fixed;top:94%;">
+                
+            </div>
+        </div>
+    </div> 
+</body>
+<script type="text/javascript">
+   
+    var text = sessionStorage.getItem("allJson");//获取键为allJson的字符串
+    // var json = str.parseJSON();
+    // var str_json = JSON.parse(str) 
+    // console.log(str_json)
+    while (text.indexOf("\r") >= 0) {
+                text = text.replace("\r", "\\r");
+                text = text.replace("\n", "\\n");
+            }
+    var json_str = eval("(" + text + ")");
+    console.log(json_str)
+    // alert(json_str.contact)
+
+</script>
+
+    <script type="text/javascript">
+        
+
+        Vue.component('tab-search', { 
+            template: '#url2' 
+        })
+        Vue.component('tab-url', { 
+            template: '#url' 
+        })
+        Vue.component('tab-file', { 
+            template: '#file' 
+        })
+
+        var vm = new Vue({
+          el:'#box',
+          data:{
+            currentTab:'Search',
+            tabs: ['Search', 'Url', 'File'],
+
+          },
+          methods:{
+            
+          },
+          computed:{
+            currentTabComponent:function  () {
+                return "tab-"+this.currentTab.toLowerCase()
+            }
+          },
+          delimiters : ['[[', ']]'],
+        })
+
+
+
+        var vm2 = new Vue({
+            el:"#app",
+            data:{
+                contact:json_str
+            }
+        })
+
+
+        for (var i = 0; i < json_str.list.length; i++) {
+            json_str.list[i][2]
+        };
+        var vm3 = new Vue({
+            el:"#intelligence",
+            data:{
+                contact:json_str,
+            }
+        })
+
+
+// 按钮特效***********************************************
+        $(function () {
+            var flag = 0;
+            $("#sel_btn").click(function() {
+                if (flag==0) {
+                    $("#sel_box").addClass('show').removeClass('noshow')
+                    flag = 1;
+               }else{
+                    $("#sel_box").addClass('noshow').removeClass('show');
+                    flag = 0;
+               }
+            });
+        })
+        
+    </script>
+
+    <!-- 页面下滑大于300px顶部弹出搜索框，小于300px自动消失 -->
+    <script type="text/javascript">
+        var flag = 0;
+        window.onscroll = function () {
+            if(window.scrollY >= 150 && flag == 0){
+                flag = 1;
+                document.getElementById("headd").className="show";
+            }else if(window.scrollY <= 150 && flag == 1){
+                flag = 0;
+                document.getElementById("headd").className="noshow";
+            }
+        }
+    </script>
+<script>
+    function login(num) {
+        if (num == 0) {
+            location.href = "login.html"
+        } else {
+            location.href = "login.html"
+        }
+    }
+
+</script>
+<script>
+        
+        $(function() {
+          
+          var $topLoader = $("#topLoader").percentageLoader({width: 156, height: 156, controllable : false, progress : 0, onProgressUpdate : function(val) {
+              $topLoader.setValue(Math.round(val * 100.0));
+            }});
+          var topLoaderRunning = false;
+
+          $(function() {
+            // alert("message")
+            if (topLoaderRunning) {
+              return;
+            }
+            topLoaderRunning = true;
+            $topLoader.setProgress(0);
+            $topLoader.setValue('0');
+            var kb = 0;
+            var totalKb = 999;
+            
+            var animateFunc = function() {
+              kb += 17;
+              $topLoader.setProgress(kb / totalKb);
+              $topLoader.setValue( "安全度" );
+              
+              if (kb < totalKb) {
+                setTimeout(animateFunc, 25);
+              } else {
+                topLoaderRunning = false;
+
+                $topLoader.setProgress(0.5); // 设置最终的百分比
+              }
+            }
+            
+            setTimeout(animateFunc, 25);
+            
+          });
+        });      
+        
+      </script>
+</html>

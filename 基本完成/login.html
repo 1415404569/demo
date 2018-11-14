@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache"> 
+<meta http-equiv="Expires" content="0"> 
+<title>后台管理</title>
+<link href="main/css/login.css" rel="stylesheet" type="text/css" />
+    <script src="main/js/jquery-3.1.1.min.js"></script>
+    <style>
+        .noshow{
+            display: none;}
+        .zc_btn{
+            
+            width:80px;
+            display: block;
+            margin:10px auto;
+            cursor: pointer;
+        }
+        .zc_btn:hover{
+            color:red;
+            font-weight: bold;
+            
+        }
+        body{
+          width: 100%;
+          height: 100%;
+          position: relative;
+          background-image: url(main/icon/bg.jpg);
+          background-position: 50% 50%;
+          background-size: cover;
+          background-repeat: no-repeat;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="login_box" id="denglu">
+      <div class="login_l_img"><img src="main/icon/login-img.png" /></div>
+      <div class="login">
+          <div class="login_logo"><a href="#"><img src="main/icon/login_logo.png" /></a></div>
+          <div class="login_name">
+               <p>登陆</p>
+          </div>
+          <form method="post">
+              <input name="username" type="text"  value="用户名" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
+              <span id="password_text" onclick="this.style.display='none';document.getElementById('password').style.display='block';document.getElementById('password').focus().select();" >密码</span>
+              <input name="password" type="password" id="password" style="display:none;" onblur="if(this.value==''){document.getElementById('password_text').style.display='block';this.style.display='none'};"/>
+              <input value="登录" style="width:100%;" type="submit">
+              <a class="zc_btn" onclick="zhuce()">还没有账号？</a>
+          </form>
+      </div>
+      <div class="copyright">某某有限公司 版权所有©2016-2018 技术支持电话：000-00000000</div>
+</div>
+
+<div class="login_box noshow" id="zhuce">
+      <div class="login_l_img"><img src="main/icon/login-img.png" /></div>
+      <div class="login">
+          <div class="login_logo"><a href="#"><img src="main/icon/login_logo.png"  /></a></div>
+          <div class="login_name">
+               <p>注册</p>
+          </div>
+          <form method="post">
+              <input name="username" type="text"  value="用户名" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
+              <input name="password" type="text"  value="输入密码" onfocus="this.value=''" onblur="if(this.value==''){this.value='输入密码'}">
+              <input name="re_password" type="text"  value="重新输入密码" onfocus="this.value=''" onblur="if(this.value==''){this.value='重新输入密码'}">
+              <input name="tel" type="text"  value="输入手机号码" onfocus="this.value=''" onblur="if(this.value==''){this.value='输入手机号码'}">
+              <input value="登录" style="width:100%;" type="submit">
+              <a class="zc_btn"  onclick="denglu()">已经有账号？</a>
+          </form>
+      </div>
+      <div class="copyright">某某有限公司 版权所有©2016-2018 技术支持电话：000-00000000</div>
+</div>
+<div style="text-align:center;">
+ 
+</div>
+</body>
+<script>
+    var s = 0
+    if (s==1){
+        zhuce()
+    }
+    function denglu() {
+       $('#zhuce').addClass("noshow");
+       $("#denglu").removeClass("noshow")
+
+    }
+    function zhuce () {
+       $('#zhuce').removeClass("noshow");
+       $("#denglu").addClass("noshow")
+    }
+</script>
+</html>
